@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+user_id String @id @default(cuid())
+email String @unique
+password String
+role String @default("user")
+createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
+
+siswa Siswa?
+}
+
+model Siswa {
+  siswa_id String @id @default(cuid())
+  user_id String @unique
+  pkl_id String
+  nama String
+  kelas String
+  nisn String @unique
+  alamat String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jurnal Jurnal[]
+
+  user User @relation(fields: [user_id], references: [user_id])
+  pkl Pkl @relation(fields: [pkl_id], references: [pkl_id])
+}
+
+model Jurnal {
+  jurnal_id Int @id @default(autoincrement())
+  siswa_id String
+  tanggal_jurnal String
+  keterangan String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  siswa Siswa @relation(fields: [siswa_id], references: [siswa_id])
+}
+
+model Pkl {
+  pkl_id String @id @default(cuid())
+  nama String
+  alamat String
+  pembimbing String
+  no_telp String
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  
+  siswa Siswa[]
+}

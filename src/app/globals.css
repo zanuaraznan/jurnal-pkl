@@ -1,26 +1,68 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+    --breakpoint-xl: 1280;
+    --color-base-50: #e9e9ea;
+    --color-base-100: #a6a4a8;
+    --color-base-200: #817e85;
+    --color-base-300: #4a4750;
+    --color-base-400: #25212c;
+    --color-base-500: #1a171f;
+    --color-base-600: #17141b;
+    --color-primary-50: #f0edf2;
+    --color-primary-100: #c3b4ca;
+    --color-primary-200: #aa95b4;
+    --color-primary-300: #866894;
+    --color-primary-400: #6d497e;
+    --color-primary-500: #4c3358;
+    --color-primary-600: #422d4d;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --font-grotesk: var(--grotesk);
+    --font-tt-bluescreens: var(--tt-bluescreens);
+    --font-bagel: var(--bagel);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@utility container {
+    @apply mx-auto px-4;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility flex-center {
+    @apply flex justify-center items-center;
+}
+
+@custom-variant hover-active {
+    &:hover:active {
+        @slot;
+    }
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@keyframes rotate-gradient {
+    to {
+        --angle: 360deg;
+    }
+}
+
+@property --angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+* {
+    @apply selection:bg-violet-200;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+button {
+    @apply cursor-pointer transition-all active:scale-95 ease-[cubic-bezier(.21,1.7,.15,.88)] duration-500;
 }
